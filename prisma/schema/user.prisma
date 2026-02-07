@@ -1,0 +1,36 @@
+model User {
+  id                     String            @id @default(uuid())
+  fullName               String?
+  username               String            @unique
+  email                  String            @unique
+  phone                  String?           @unique
+  avatarUrl              String?
+  passwordHash           String
+  role                   UserRole
+  accountStatus          UserAccountStatus @default(PENDING)
+  isActive               Boolean           @default(true)
+  changePasswordRequired Boolean           @default(true)
+  isVerified             Boolean           @default(false)
+  isDeleted              Boolean           @default(false)
+  lastActive             DateTime?
+  lastLogin              DateTime?
+  createdAt              DateTime          @default(now())
+  updatedAt              DateTime          @updatedAt
+
+  @@map("users")
+}
+
+enum UserRole {
+  SUPER_ADMIN
+  ADMIN
+  MANAGER
+  EMPLOYEE
+  CLIENT
+  FINANCE
+}
+
+enum UserAccountStatus {
+  ACTIVE
+  INACTIVE
+  PENDING
+}
