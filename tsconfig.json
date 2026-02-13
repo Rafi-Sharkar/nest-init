@@ -12,8 +12,13 @@
     "target": "ES2023",
     "sourceMap": true,
     "outDir": "./dist",
+<<<<<<< HEAD
     "rootDir": ".",
+=======
+    "rootDir": "./",
+>>>>>>> 2b3efb9657ac7f2c15ea6225484d1394f6f9f982
     "baseUrl": "./",
+    "tsBuildInfoFile": "./dist/tsconfig.tsbuildinfo",
     "paths": {
       "@/*": ["src/*"],
       "@prisma": ["prisma/generated/client"]
@@ -28,5 +33,9 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": ["src", "prisma/generated"],
+<<<<<<< HEAD
   "exclude": ["node_modules", "dist", "prisma/migrations", "prisma/schema"]
+=======
+  "exclude": ["node_modules", "dist", "prisma/schema", "prisma/migrations"]
+>>>>>>> 2b3efb9657ac7f2c15ea6225484d1394f6f9f982
 }
