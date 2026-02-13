@@ -12,13 +12,14 @@
     "target": "ES2023",
     "sourceMap": true,
     "outDir": "./dist",
-    "rootDir": "./src",
+    "rootDir": ".",
     "baseUrl": "./",
     "paths": {
       "@/*": ["src/*"],
       "@prisma": ["prisma/generated/client"]
     },
     "incremental": true,
+    "tsBuildInfoFile": "./dist/tsconfig.tsbuildinfo",
     "skipLibCheck": true,
     "strictNullChecks": true,
     "forceConsistentCasingInFileNames": true,
@@ -26,6 +27,6 @@
     "strictBindCallApply": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "prisma/generated/client"],
-  "exclude": ["node_modules", "dist", "prisma"]
+  "include": ["src", "prisma/generated"],
+  "exclude": ["node_modules", "dist", "prisma/migrations", "prisma/schema"]
 }
