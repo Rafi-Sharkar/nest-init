@@ -11,6 +11,7 @@ model User {
   isActive               Boolean           @default(true)
   changePasswordRequired Boolean           @default(true)
   isVerified             Boolean           @default(false)
+  tokenVersion           Int               @default(0)
   isDeleted              Boolean           @default(false)
   lastActive             DateTime?
   lastLogin              DateTime?
@@ -18,7 +19,6 @@ model User {
   updatedAt              DateTime          @updatedAt
 
   @@map("users")
-  posts Post[]
 }
 
 enum UserRole {

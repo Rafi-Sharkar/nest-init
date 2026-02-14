@@ -12,7 +12,7 @@ import { MainModule } from './main/main.module';
   ],
   controllers: [AppController],
   providers: [],
-  exports: []
+  exports: [],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

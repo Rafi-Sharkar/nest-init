@@ -63,7 +63,7 @@ services:
       timeout: 10s
       retries: 5
     networks:
-      - ${DOCKER_PACKAGE_NAME}_network
+      - nest-init_network
   db: 
     profiles: ['dev', 'prod']
     image: postgres:17
@@ -84,7 +84,7 @@ services:
       timeout: 5s
       retries: 5
     networks:
-      - ${DOCKER_PACKAGE_NAME}_network
+      - nest-init_network
 
   redis-master:
     profiles: ['dev', 'prod']
@@ -101,7 +101,7 @@ services:
         'no',
       ]
     ports:
-      - '22376:6379'
+      - '22380:6379'
     healthcheck:
       test: ['CMD', 'redis-cli', 'ping']
       interval: 5s
@@ -109,7 +109,7 @@ services:
       retries: 5
     restart: always
     networks:
-      - ${DOCKER_PACKAGE_NAME}_network
+      - nest-init_network
 
   redis-replica:
     profiles: ['prod']
@@ -132,7 +132,7 @@ services:
       - redis-master
     restart: always
     networks:
-      - ${DOCKER_PACKAGE_NAME}_network
+      - nest-init_network
 
 volumes:
   db_data:
@@ -143,7 +143,7 @@ volumes:
   caddy_config:
 
 networks:
-  ${DOCKER_PACKAGE_NAME}_network:
+  nest-init_network:
     driver: bridge
 
     

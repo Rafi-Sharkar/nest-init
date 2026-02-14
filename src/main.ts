@@ -26,9 +26,7 @@ async function bootstrap() {
   app.useGlobalFilters(new AllExceptionsFilter());
 
   app.enableCors({
-    origin: [
-      'http://localhost:3000',
-    ],
+    origin: ['http://localhost:3000'],
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
@@ -50,11 +48,10 @@ async function bootstrap() {
     },
   });
 
-  const port = parseInt(configService.get<string>(ENVEnum.PORT) ?? '5000', 10);
+  const port = parseInt(configService.get<string>(ENVEnum.PORT) ?? '5001', 10);
   await app.listen(port);
 
   console.info(`🚀 Nest Init running on port ${port}`);
   console.info(`📄 Swagger: http://localhost:${port}/docs`);
-
 }
 bootstrap();
