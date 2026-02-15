@@ -21,6 +21,7 @@ import {
   ResetPasswordDto,
   VerifyOtpDto,
 } from './dto';
+import { AuthMailService } from '@/lib/mail/services/auth-mail.service';
 
 type JwtAccessPayload = {
   userId: string;
@@ -40,6 +41,8 @@ export class AuthService {
     private readonly redis: RedisService,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
+    private readonly authMailService: AuthMailService,
+ 
   ) {}
 
   async register(dto: RegisterDto) {
@@ -51,6 +54,7 @@ export class AuthService {
       ...(dto.phone ? [{ phone: dto.phone }] : []),
     ];
 
+    // Check if user email already exists
     const existing = await this.prisma.client.user.findFirst({
       where: {
         OR: orConditions,
@@ -63,6 +67,7 @@ export class AuthService {
 
     const passwordHash = await argon2.hash(dto.password);
 
+    // Create new user
     const user = await this.prisma.client.user.create({
       data: {
         email,
@@ -76,10 +81,20 @@ export class AuthService {
       },
     });
 
+    // Generate OTP and save to Redis with 5 minute expiration
     const otp = this.generateOtp();
     await this.redis.set(this.otpKey(email), otp, 300);
 
-    console.info(`OTP for ${email}: ${otp}`);
+    // Send verification email
+    await this.authMailService.sendVerificationCodeEmail(
+      email,
+      otp.toString(),
+      {
+        subject: 'Verify your email',
+        message:
+          'Welcome to our platform! Your account has been successfully created.',
+      },
+    );
 
     return {
       userId: user.id,
