@@ -6,10 +6,12 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
+import { MailModule } from '@/lib/mail/mail.module';
 
 @Module({
   imports: [
     ConfigModule,
+    MailModule,
     PrismaModule,
     RedisModule,
     JwtModule.registerAsync({
